@@ -1,0 +1,55 @@
+### vim
+*.swp
+*.swo
+*~
+
+### ctags
+tags
+
+### cscope
+cscope.in.out
+cscope.out
+cscope.po.out
+
+### Source Insight
+*.IAB
+*.IAD
+*.IMB
+*.IMD
+*.PFI
+*.PO
+*.PR
+*.PRI
+*.PS
+*.WK3
+*.SearchResults
+
+### SlickEdit
+*.vpwhist
+*.vtg
+*.vpj
+*.vpw
+
+### Goland(Gogland)
+.idea/
+
+!.gitignore
+!.gitmodules
+!.gitkeep
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Other
+publish/
+bin/
