@@ -64,7 +64,8 @@ func (s *CustomFormatter) Format(entry *log.Entry) ([]byte, error) {
 		}
 		//fmt.Println(entry.Data)
 		//msg := fmt.Sprintf("%s [%s:%d][GOID:%d][%s] %s\n", timestamp, file, line, getGID(), strings.ToUpper(entry.Level.String()), entry.Message)
-		msg := fmt.Sprintf("%s %s %s:%d [GOID:%d] %s\n", timestamp, strings.ToUpper(entry.Level.String()), file, line, getGID(), entry.Message)
+		//msg := fmt.Sprintf("%s %s %s:%d [GOID:%d] %s\n", timestamp, strings.ToUpper(entry.Level.String()), file, line, getGID(), entry.Message)
+		msg := fmt.Sprintf("%s %s %s:%d %s\n", timestamp, strings.ToUpper(entry.Level.String()), file, line, entry.Message)
 		return []byte(msg), nil
 	}
 
