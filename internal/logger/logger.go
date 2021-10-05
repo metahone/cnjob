@@ -10,7 +10,7 @@ import (
 )
 
 type Options struct {
-	Format       string
+	TimeFormat   string
 	Level        log.Level
 	Path         string
 	ReportCaller bool
@@ -21,20 +21,20 @@ type Option func(*Options)
 func NewOptions() *Options {
 	return &Options{
 		Level:        log.Level(999),
-		Path:         "",
 		ReportCaller: false,
 	}
 }
 
-func (o *Options) withDefault() Options {
+func (o *Options) withDefault() *Options {
 	updated := *o
 	if updated.Level == log.Level(999) {
 		updated.Level = log.WarnLevel
 	}
-	if updated.Format == "" {
-		updated.Format = "2006-01-02T15:04:05.000Z0700"
+	if updated.TimeFormat == "" {
+		//updated.TimeFormat = "2006-01-02T15:04:05.000Z0700"
+		updated.TimeFormat = "2006-01-02 15:04:05.000000"
 	}
-	return updated
+	return &updated
 }
 
 func WithLevel(level log.Level) Option {
@@ -55,9 +55,9 @@ func WithReportCaller(report bool) Option {
 	}
 }
 
-func WithFormat(format string) Option {
+func WithTimeFormat(format string) Option {
 	return func(args *Options) {
-		args.Format = format
+		args.TimeFormat = format
 	}
 }
 
@@ -86,11 +86,17 @@ func Init(opts ...Option) {
 			}
 			op(opt)
 		}
-		opt.withDefault()
+		opt = opt.withDefault()
 
-		log.SetFormatter(&log.JSONFormatter{
-			TimestampFormat: opt.Format,
-		})
+		//log.SetFormatter(&log.JSONFormatter{
+		//	TimestampFormat: opt.TimeFormat,
+		//})
+
+		customDefaultFormatter := NewCustomFormatter(
+			WithCustomTimeFormat(opt.TimeFormat),
+			WithCustomCaller(opt.ReportCaller),
+		)
+		log.SetFormatter(customDefaultFormatter)
 		log.SetLevel(opt.Level)
 		log.SetReportCaller(opt.ReportCaller)
 
@@ -100,7 +106,7 @@ func Init(opts ...Option) {
 			logger := &lumberjack.Logger{
 				Filename:   opt.Path,
 				MaxSize:    128, // megabytes
-				MaxAge:     7,   //days
+				MaxAge:     7,   // days
 				MaxBackups: 5,
 				LocalTime:  true,
 				Compress:   true, // disabled by default
@@ -109,7 +115,6 @@ func Init(opts ...Option) {
 		}
 
 		writers = append(writers, os.Stdout)
-		fileAndStdoutWriter := io.MultiWriter(writers...)
-		log.SetOutput(fileAndStdoutWriter)
+		log.SetOutput(io.MultiWriter(writers...))
 	})
 }
