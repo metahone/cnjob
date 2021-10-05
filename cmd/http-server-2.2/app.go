@@ -23,7 +23,7 @@ func (a *App) Initialize() error {
 	a.ctx = context.Background()
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", final)
+	mux.HandleFunc("/", root)
 	mux.HandleFunc("/healthz", healthz)
 
 	a.server = &http.Server{
