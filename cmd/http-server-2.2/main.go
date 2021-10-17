@@ -1,11 +1,12 @@
 package main
 
 import (
-	"cnjob/internal/command"
-	"cnjob/internal/logger"
 	"flag"
 	"fmt"
 	"os"
+
+	"cnjob/internal/command"
+	"cnjob/internal/logger"
 )
 
 var (
@@ -26,6 +27,9 @@ func init() {
 
 	if Version == "" {
 		Version = os.Getenv("VERSION")
+		if Version == "" {
+			Version = GetVersion()
+		}
 	}
 
 	Level, err := logger.ParseLevel(LogLevel)
