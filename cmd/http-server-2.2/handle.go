@@ -19,6 +19,7 @@ func healthz(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	io.WriteString(w, "ok") // fmt.Fprintf(w, "ok")
+	log.Infof("response %s http code %d", ip, http.StatusOK)
 }
 
 func root(w http.ResponseWriter, r *http.Request) {
@@ -43,6 +44,7 @@ func root(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Version", Version)
 		io.WriteString(w, fmt.Sprintf("Version: %s\n", Version))
 	}
+	log.Infof("response %s http code %d", ip, http.StatusOK)
 }
 
 // GetIP returns request real ip.
