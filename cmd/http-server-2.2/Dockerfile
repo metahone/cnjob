@@ -4,7 +4,7 @@ WORKDIR /
 
 EXPOSE 80
 
-COPY ../../bin/httpserver /
+COPY httpserver /
 
 ENV VERSION=""
 

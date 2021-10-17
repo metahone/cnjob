@@ -11,7 +11,7 @@ IMAGE_TAG=$(GIT_TAG)-$(GIT_COMMIT)
 all: build
 
 build:
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags "-s -w ${LDFLAGS}" -o ../../bin/$(NAME)
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags "-s -w ${LDFLAGS}" -o $(NAME)
 .PHONY: build
 
 docker:
@@ -28,4 +28,4 @@ docker_push: docker
 
 clean:
 	go clean
-	rm -rf ../../bin/$(NAME)
+	rm -rf $(NAME)

@@ -53,3 +53,5 @@ cscope.po.out
 # Other
 publish/
 bin/
+
+httpserver
