@@ -1,4 +1,5 @@
-FROM scratch
+#FROM scratch
+FROM busybox:1.28.4
 
 WORKDIR /
 
