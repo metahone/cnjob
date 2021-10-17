@@ -11,3 +11,39 @@
   4.当访问 localhost/healthz 时，应返回200  
 
 > 注意： 默认日志级别 warn, 如要看到 http 请求输出，需要设置日志级别 --log_level=info
+
+# 课后练习 3.2
+
+docker run --rm --name httpserver -d -p 80:80 metazone/httpserver
+
+* 构建本地镜像
+```bash
+  make build
+```
+* 编写 Dockerfile 将练习 2.2 编写的 httpserver 容器化
+```bash
+  make build
+```
+* 请思考有哪些最佳实践可以引入到 Dockerfile 中来
+* 将镜像推送至 docker 官方镜像仓库
+```bash
+  make docker_push
+```
+* 通过 docker 命令本地启动 httpserver
+```bash
+  docker run --rm --name httpserver -d -p 80:80 metazone/httpserver
+```
+* 通过 nsenter 进入容器查看 IP 配置
+```bash
+# PID=$(docker inspect --format "{{ .State.Pid }}" httpserver)
+# nsenter -t $PID -n ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+28: eth0@if29: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+ 
+```
