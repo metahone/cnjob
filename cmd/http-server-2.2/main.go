@@ -10,26 +10,30 @@ import (
 )
 
 var (
-	Listener  string
-	Version   string
-	LogLevel  string
-	LogPath   string
-	LogCaller bool
+	Listener    string
+	Version     string
+	LogLevel    string
+	LogPath     string
+	LogCaller   bool
+	showVersion bool
 )
 
 func init() {
 	flag.StringVar(&Listener, "listen", ":80", "set listen")
-	flag.StringVar(&Version, "version", "", "set version")
 	flag.StringVar(&LogLevel, "log_level", "warn", fmt.Sprintf("support log level: \n\t%v", logger.GetSupportLogLevelToString()))
 	flag.StringVar(&LogPath, "log_path", "", "set log path")
 	flag.BoolVar(&LogCaller, "log_caller", true, "print log caller")
+	flag.BoolVar(&showVersion, "V", false, "Show version Details")
 	flag.Parse()
 
+	if showVersion {
+		fmt.Println(GetVersion())
+		os.Exit(0)
+	}
+
+	Version = os.Getenv("VERSION")
 	if Version == "" {
-		Version = os.Getenv("VERSION")
-		if Version == "" {
-			Version = GetVersion()
-		}
+		Version = GetVersion()
 	}
 
 	Level, err := logger.ParseLevel(LogLevel)

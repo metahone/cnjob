@@ -1,11 +1,15 @@
 package main
 
+import (
+	"fmt"
+)
+
 var (
-	GIT_COMMIT string
-	GIT_TAG    string
-	BUILD_DATE string
+	GitCommit string
+	GitTag    string
+	BuildDate string
 )
 
 func GetVersion() string {
-	return GIT_TAG + " " + GIT_COMMIT + " " + BUILD_DATE
+	return fmt.Sprintf("Version info: Tag %v, CommitHash %v, BuildDate %v", GitTag, GitCommit, BuildDate)
 }
