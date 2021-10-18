@@ -17,6 +17,7 @@
 * 构建本地镜像
 ```bash
   make build
+  make docker
 ```
 
 * 编写 Dockerfile 将练习 2.2 编写的 httpserver 容器化
