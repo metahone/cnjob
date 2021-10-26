@@ -3,11 +3,12 @@ package main
 import (
 	"errors"
 	"fmt"
-	log "github.com/sirupsen/logrus"
 	"io"
 	"net"
 	"net/http"
 	"strings"
+
+	log "github.com/sirupsen/logrus"
 )
 
 func healthz(w http.ResponseWriter, r *http.Request) {
@@ -36,8 +37,11 @@ func root(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	for k, v := range headers {
-		w.Header().Add(k, v[0])
-		io.WriteString(w, fmt.Sprintf("%s: %s\n", k, v))
+		// Because Header is a map[string][]string, two loops are required to access all headers.
+		for _, item := range v {
+			w.Header().Add(k, item)
+			io.WriteString(w, fmt.Sprintf("%s: %s\n", k, v))
+		}
 	}
 
 	if len(Version) > 0 { // os.Getenv("VERSION")
