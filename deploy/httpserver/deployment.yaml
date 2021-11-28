@@ -16,6 +16,9 @@ spec:
         - name: httpserver
           image: metazone/httpserver:latest
           imagePullPolicy: IfNotPresent
+          command:
+            - ./httpserver
+            - --log_level=info
           ports:
             - containerPort: 80
               #hostPort: 80
