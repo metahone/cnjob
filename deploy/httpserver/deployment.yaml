@@ -19,6 +19,11 @@ spec:
           command:
             - ./httpserver
             - --log_level=info
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
           ports:
             - containerPort: 80
               #hostPort: 80
