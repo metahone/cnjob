@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: httpserver-service
 spec:
-  #  type: ClusterIP
-  type: LoadBalancer
-  externalIPs:
-    - 192.168.34.11
+  type: ClusterIP
+  #type: LoadBalancer
+  #externalIPs:
+  #  - 192.168.34.11
   selector:
     app: httpserver
   ports:
